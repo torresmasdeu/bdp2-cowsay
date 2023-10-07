@@ -6,9 +6,9 @@ Written by Laia Torres Masdeu.
 **List of contents**
 1. Create a new local git repo on VM1
 2. Create a Dockerfile
-3. Push the repo on VM1 to bdp2-cowsay on GitHub.
+3. Push the repo on VM1 to bdp2-cowsay on GitHub
 4. Build the image on VM1 out of the Dockerfile
-5. Run the image interactively.
+5. Run the image interactively
 
 ## 1. Create a new local git repo on VM1
 First of all, create a directory for this exercise and go there:
@@ -44,8 +44,44 @@ git status
 And commit the changes:
 ```
 git commit -m "First commit of my cowsay Dockerfile"
-
 ```
 
 And check again the status (`git status`) to check that all changes are committed.
 
+Next, you have to tell git the location of the "origin" of the remote repo, the GitHub repository (already created on GitHub) and push the changes to GitHub. It asks for the GitHub username and password (GitHub Personal Access Token).
+```
+git remote add origin https://github.com/torresmasdeu/bdp2-cowsay.git
+```
+
+And finally, push everything that has been committed in the "master" branch of the local repo to the "origin":
+```
+git push -u origin master
+```
+
+## 4. Build the image on VM1 out of the Dockerfile
+To build the image on VM1 from the Dockerfile, just run the `docker build` command, indicating the name of the image (`-t`) and the path of the Dockerfile that contains the information to build the image (`.`):
+```
+docker build -t my-cowsay .
+```
+
+## 5. Run the image interactively
+Once it is built, run it interactivelly (`-it`) by using the `docker run` command. `--rm` removes the container once you exit it:
+```
+docker run --rm -it my-cowsay
+```
+Finally, check that `cowsay` works:
+```
+/usr/games/cowsay "Hello BDP2 Students"
+```
+
+This is the output:
+```
+ _____________________
+< Hello BDP2 Students >
+ ---------------------
+        \   ^__^
+         \  (oo)\_______
+            (__)\       )\/\
+                ||----w |
+                ||     ||
+```
